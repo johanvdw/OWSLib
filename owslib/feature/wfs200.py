@@ -288,8 +288,7 @@ class WebFeatureService_2_0_0(WebFeatureService_):
                 startindex,
                 sortby,
             )
-            if log.isEnabledFor(logging.DEBUG):
-                log.debug("GetFeature WFS GET url %s" % url)
+            log.debug("GetFeature WFS GET url %s" % url)
         else:
             (url, data) = self.getPOSTGetFeatureRequest()
 

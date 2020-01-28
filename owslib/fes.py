@@ -346,15 +346,17 @@ class PropertyIsLike(OgcExpression):
         self.wildCard = wildCard
         self.matchCase = matchCase
 
-    def toXML(self):
-        node0 = etree.Element(util.nspath_eval('ogc:PropertyIsLike', namespaces))
+    def toXML(self, version='1.0.0'):
+        ns = 'ogc:' if version=='1.0.0' else 'fes:'
+        node0 = etree.Element(util.nspath_eval(ns + 'PropertyIsLike', namespaces))
         node0.set('wildCard', self.wildCard)
         node0.set('singleChar', self.singleChar)
         node0.set('escapeChar', self.escapeChar)
         if not self.matchCase:
             node0.set('matchCase', 'false')
-        etree.SubElement(node0, util.nspath_eval('ogc:PropertyName', namespaces)).text = self.propertyname
-        etree.SubElement(node0, util.nspath_eval('ogc:Literal', namespaces)).text = self.literal
+        property_name = 'PropertyName' if version=='1.0.0' else 'ValueReference'
+        etree.SubElement(node0, util.nspath_eval(ns + property_name, namespaces)).text = self.propertyname
+        etree.SubElement(node0, util.nspath_eval(ns + 'Literal', namespaces)).text = self.literal
         return node0
 
 
